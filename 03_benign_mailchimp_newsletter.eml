@@ -1,0 +1,81 @@
+Return-Path: <bounce-mc.us17_123456.7654321-news=cloudora.io@mail105.suw16.mcsv.net>
+Received: from LO4P123MB2210.GBRP123.PROD.OUTLOOK.COM
+ (2603:10a6:600:31::12) by LO2P123MB4410.GBRP123.PROD.OUTLOOK.COM with
+ HTTPS; Mon, 25 Aug 2026 06:58:44 +0000
+Received: from DB9EUR03FT062.eop-EUR03.prod.protection.outlook.com
+ (2603:10a6:10:1e2::21) by DB7PR08CA0099.outlook.office365.com
+ (2603:10a6:10:2c::28) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9145.22; Mon, 25 Aug
+ 2026 06:58:43 +0000
+Received: from mail105.suw16.mcsv.net (198.18.60.5) by
+ DB9EUR03FT062.mail.protection.outlook.com (10.152.16.80) with Microsoft SMTP
+ Server id 15.20.9145.14 via Frontend Transport; Mon, 25 Aug 2026 06:58:41 +0000
+Authentication-Results: spf=pass (sender IP is 198.18.60.5)
+ smtp.mailfrom=mail105.suw16.mcsv.net; dkim=pass (signature was verified)
+ header.d=cloudora.io; dkim=pass (signature was verified) header.d=mcsv.net;
+ dmarc=pass action=none header.from=cloudora.io; compauth=pass reason=100
+Received-SPF: Pass (protection.outlook.com: domain of
+ mail105.suw16.mcsv.net designates 198.18.60.5 as permitted sender)
+ receiver=protection.outlook.com; client-ip=198.18.60.5;
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=cloudora.io;
+ s=k2; h=From:Subject:Date:To:List-Unsubscribe:MIME-Version;
+ bh=Q1w2e3r4T5y6U7i8O9p0aS1dF2gH3jK4lZ5xC6vB7n=; b=Mv9nBq2...
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=mcsv.net;
+ s=k1; h=From:Subject:Date:To; bh=Q1w2e3r4T5y6U7i8O9p0=; b=Lp0oIu9...
+From: "Cloudora News" <news@cloudora.io>
+Reply-To: "Cloudora News" <news@cloudora.io>
+To: "Adam Clark" <adam.clark@cloudora.io>
+Subject: Cloudora Monthly: product updates, team wins and what's next
+Date: Mon, 25 Aug 2026 06:58:39 +0000
+Message-ID: <20260825065839.7654321.123456@mail105.suw16.mcsv.net>
+X-Feedback-ID: 123456:7654321:us17:mc
+X-Mailer: MailChimp Mailer - **CID1a2b3c4d5e**
+List-Unsubscribe: <https://cloudora.us17.list-manage.com/unsubscribe?u=123456&id=abcd1234&e=xyz>,
+ <mailto:unsubscribe-mc.us17_123456.7654321-news=cloudora.io@mail105.suw16.mcsv.net>
+List-Unsubscribe-Post: List-Unsubscribe=One-Click
+MIME-Version: 1.0
+Content-Type: multipart/alternative; boundary="=_mc_boundary_c4d5"
+X-MyFirstHack-Training: Benign marketing newsletter (the false positive for
+ CLD-0002). Legitimately sent for Cloudora via Mailchimp: SPF pass, DKIM
+ aligned to cloudora.io, DMARC pass, one-click unsubscribe. All indicators
+ synthetic.
+
+--=_mc_boundary_c4d5
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: quoted-printable
+
+CLOUDORA MONTHLY - August
+
+Hi Adam,
+
+A quick round-up from the Cloudora team this month: our new onboarding module
+shipped, the Manchester office hit its hiring target, and we previewed the
+autumn product roadmap at the all-hands.
+
+Read the full update:
+https://cloudora.us17.list-manage.com/track/click?u=123456&id=news-aug
+
+You are receiving this because you are a Cloudora employee subscribed to
+internal news. Unsubscribe any time using the link below.
+
+Cloudora News Team
+
+--=_mc_boundary_c4d5
+Content-Type: text/html; charset="utf-8"
+Content-Transfer-Encoding: quoted-printable
+
+<html><body style=3D"font-family:Arial,sans-serif;color:#14181d">
+<h2 style=3D"color:#0f4c81">Cloudora Monthly - August</h2>
+<p>Hi Adam,</p>
+<p>A quick round-up from the Cloudora team this month: our new onboarding
+module shipped, the Manchester office hit its hiring target, and we previewed
+the autumn product roadmap at the all-hands.</p>
+<p><a href=3D"https://cloudora.us17.list-manage.com/track/click?u=3D123456&id=3D=
+news-aug">Read the full update</a></p>
+<p style=3D"font-size:11px;color:#5b6670">You are receiving this because you are
+a Cloudora employee subscribed to internal news.
+<a href=3D"https://cloudora.us17.list-manage.com/unsubscribe?u=3D123456&id=3Dabc=
+d1234">Unsubscribe</a>.</p>
+</body></html>
+
+--=_mc_boundary_c4d5--

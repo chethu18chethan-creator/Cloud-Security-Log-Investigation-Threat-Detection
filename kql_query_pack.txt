@@ -1,0 +1,172 @@
+// ============================================================================
+//  CLOUDORA  |  KQL QUERY PACK  -  Payroll phishing campaign investigation
+//  Ticket CLD-0002 - "Payroll update: action required" phishing campaign
+//  MyFirstHack  |  myfirstcyberjob community resource
+// ============================================================================
+//
+//  HOW TO USE THIS FILE
+//  - Steps 1 to 5 of this investigation happen in the .eml files and threat-
+//    intel tools (header analysis, URL and infrastructure analysis, VirusTotal
+//    and AbuseIPDB). There is no KQL for those - see the Student Guide and the
+//    phishing header-analysis checklist. KQL starts at Step 6, where you scope
+//    the campaign and find who clicked and who was compromised.
+//  - Load the two data files into Azure Data Explorer (dataexplorer.azure.com)
+//    and name the tables EXACTLY:
+//        CloudoraMsgTrace_CL   (from cloudora_msgtrace_logs.csv)
+//        CloudoraSignIn_CL     (from cloudora_signin_logs.csv)
+//    Keep the _CL suffix - every query below expects those exact names.
+//  - At ingestion, set column types: TimeGenerated = datetime. In
+//    CloudoraMsgTrace_CL set CredentialsSubmitted, SPFResult, DKIMResult and
+//    DMARCResult to STRING. In CloudoraSignIn_CL set ResultType to STRING.
+//    Data Explorer guesses some of these are numbers; if you leave them
+//    numeric, the quoted comparisons below (e.g. "Yes", "0") return nothing.
+//  - Data Explorer has no global time-range picker - the dates live inside the
+//    queries. All timestamps are UTC; keep your report in UTC too.
+//  - This is the same KQL that runs in Microsoft Sentinel and Defender, so the
+//    skill and every query here transfer one-to-one.
+//
+//  Lines starting with // are comments. KQL ignores them.
+// ============================================================================
+
+
+// ----------------------------------------------------------------------------
+//  STEP 0 - SANITY CHECK: did the data ingest correctly?
+// ----------------------------------------------------------------------------
+//  Expected: CloudoraMsgTrace_CL ~67 rows, CloudoraSignIn_CL ~35 rows.
+//  If you see 0, the table name is off or ingestion failed - fix that first.
+
+CloudoraMsgTrace_CL
+| count
+
+CloudoraSignIn_CL
+| count
+
+
+// ----------------------------------------------------------------------------
+//  STEP 6a - SCOPE THE CAMPAIGN: what landed, from where, and did it pass auth?
+// ----------------------------------------------------------------------------
+//  One row per campaign + sender + sending IP + authentication verdict.
+//  EventType is either "Delivery" (a message hit a mailbox) or "Click" (a
+//  recipient clicked the link). Filter to Delivery here.
+//
+//  What you should see:
+//  - PayrollPhish-A: From payroll@cloudora.io (SPOOFED), two sending IPs
+//    198.18.44.10 and 198.18.44.23, SPF/DKIM/DMARC all FAIL. Some copies
+//    Quarantined by EOP, some Delivered.
+//  - PayrollPhish-B: From payroll@cloudora-hr-portal.example (LOOKALIKE
+//    domain), IP 198.18.51.7, SPF/DKIM/DMARC all PASS - because the message
+//    really is from the attacker's own domain. Passing auth proves the domain,
+//    not that the sender is Cloudora. This is the trap in Step 5.
+
+CloudoraMsgTrace_CL
+| where EventType == "Delivery"
+| summarize Messages=count(), Recipients=dcount(RecipientAddress)
+        by Campaign, SenderAddress, SenderIP, SPFResult, DKIMResult, DMARCResult, DeliveryAction
+| order by Campaign asc, SenderIP asc
+
+
+// ----------------------------------------------------------------------------
+//  STEP 6b - WHO ACTUALLY RECEIVED IT vs WHO WAS PROTECTED BY EOP
+// ----------------------------------------------------------------------------
+//  Delivered means it reached the inbox. Quarantined means Exchange Online
+//  Protection caught it (the all-fail variant A copies). Recipients who were
+//  ONLY sent quarantined copies never saw the phish.
+
+//  Delivered to (these people saw a phish in their inbox):
+CloudoraMsgTrace_CL
+| where EventType == "Delivery" and DeliveryAction == "Delivered"
+| distinct RecipientAddress
+| order by RecipientAddress asc
+
+//  Protected by EOP (targeted, but every copy was quarantined):
+let DeliveredTo = CloudoraMsgTrace_CL
+    | where EventType == "Delivery" and DeliveryAction == "Delivered"
+    | distinct RecipientAddress;
+CloudoraMsgTrace_CL
+| where EventType == "Delivery" and DeliveryAction == "Quarantined"
+| where RecipientAddress !in (DeliveredTo)
+| distinct RecipientAddress
+| order by RecipientAddress asc
+
+
+// ----------------------------------------------------------------------------
+//  STEP 6c - WHO CLICKED, AND WHO HANDED OVER CREDENTIALS
+// ----------------------------------------------------------------------------
+//  Click rows carry the Url, the ClickIP (the recipient's own browser), and
+//  CredentialsSubmitted. The people with CredentialsSubmitted == "Yes" are your
+//  priority - assume their password is now in the attacker's hands.
+
+//  Everyone who clicked (any campaign), oldest first:
+CloudoraMsgTrace_CL
+| where EventType == "Click"
+| project TimeGenerated, RecipientAddress, Campaign, Url, ClickIP, CredentialsSubmitted
+| order by TimeGenerated asc
+
+//  Credential submitters only (the compromise shortlist):
+CloudoraMsgTrace_CL
+| where EventType == "Click" and CredentialsSubmitted == "Yes"
+| project TimeGenerated, RecipientAddress, Campaign, Url, ClickIP
+| order by TimeGenerated asc
+
+
+// ----------------------------------------------------------------------------
+//  STEP 6d - DID A SUBMITTED CREDENTIAL GET USED? Pull the victims' sign-ins
+// ----------------------------------------------------------------------------
+//  Take the credential submitters and look at their sign-ins on the incident
+//  day. You are hunting for a successful login that is NOT them: a new country,
+//  a device they never use, at a time that does not fit.
+//
+//  What you should see for freya.lynn: her genuine Manchester sign-ins in the
+//  morning, then a SUCCESS from 198.18.7.200 (Amsterdam, Netherlands) on a
+//  Windows 11 / Chrome device at 10:34 - roughly two hours after she submitted
+//  credentials. That is the attacker using the harvested password (T1078).
+
+let CredVictims = CloudoraMsgTrace_CL
+    | where EventType == "Click" and CredentialsSubmitted == "Yes"
+    | distinct RecipientAddress;
+CloudoraSignIn_CL
+| where UserPrincipalName in (CredVictims)
+| where ResultType == "0"
+| project TimeGenerated, UserPrincipalName, AppDisplayName, IPAddress, City, Country, DeviceOS, Browser
+| order by UserPrincipalName asc, TimeGenerated asc
+
+
+// ----------------------------------------------------------------------------
+//  STEP 6e - PIVOT ON THE ATTACKER IP: is anyone else compromised?
+// ----------------------------------------------------------------------------
+//  The Amsterdam login above gives you a new indicator: 198.18.7.200. Pivot on
+//  it - every account this IP signed into is compromised, whether or not you
+//  have seen their click yet. Never assume one victim.
+//
+//  This returns TWO accounts. One is freya.lynn, whom you just investigated.
+//  The other is your task - investigate it with the same moves (timeline of
+//  the attacker session, confirm the credential submission in the trace,
+//  contain it). See the Student Guide tasks and the Answer Key.
+
+CloudoraSignIn_CL
+| where IPAddress startswith "198.18.7." and ResultType == "0"
+| summarize FirstSeen=min(TimeGenerated), LastSeen=max(TimeGenerated),
+            Apps=make_set(AppDisplayName) by UserPrincipalName, IPAddress, Country
+| order by FirstSeen asc
+
+
+// ----------------------------------------------------------------------------
+//  STEP 7 - CONTAIN AND REPORT (no new queries)
+// ----------------------------------------------------------------------------
+//  Containment for a credential-phishing compromise, in order:
+//    1. Revoke sessions and refresh tokens on every credential submitter.
+//    2. Force a password reset on every credential submitter.
+//    3. Require MFA / re-register MFA on the compromised accounts.
+//    4. Block the attacker infrastructure: sending relays 198.18.44.10,
+//       198.18.44.23, 198.18.51.7; the harvest/login IP 198.18.7.200; and the
+//       domain cloudora-hr-portal.example (and any subdomain) at the mail
+//       gateway and web proxy.
+//    5. Purge the delivered phish from every mailbox (soft delete / ZAP).
+//    6. Verify: re-run Steps 6d and 6e and confirm no 198.18.7.200 activity
+//       after containment.
+//  Then write the report: fill CLD-IR-TEMPLATE, then compare with CLD-IR-0002.
+//
+//  The TASK queries (near-miss list, clicked-but-no-credentials list, second
+//  victim, and the detection rule) are NOT here on purpose - write them
+//  yourself first, then check the Answer Key (CLD-0002 Answer Key).
+// ============================================================================

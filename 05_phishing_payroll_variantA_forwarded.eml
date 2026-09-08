@@ -1,0 +1,58 @@
+Return-Path: <james.holt@cloudora.io>
+Received: from LO4P123MB6621.GBRP123.PROD.OUTLOOK.COM
+ (2603:10a6:600:2aa::19) by LO2P123MB7788.GBRP123.PROD.OUTLOOK.COM
+ (2603:10a6:600:40::11) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9145.22; Mon, 25 Aug
+ 2026 09:11:48 +0000
+Authentication-Results: spf=pass smtp.mailfrom=cloudora.io; dkim=pass
+ header.d=cloudora.io; dmarc=pass action=none header.from=cloudora.io
+From: "James Holt" <james.holt@cloudora.io>
+To: "Security Operations" <soc@cloudora.io>
+Subject: FW: Payroll update: action required before 5pm  [is this real?]
+Date: Mon, 25 Aug 2026 09:11:45 +0000
+Message-ID: <fwd-4471-2026-08-25@cloudora.io>
+MIME-Version: 1.0
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: quoted-printable
+X-MyFirstHack-Training: The reporting email that opened ticket CLD-0002. An
+ employee forwarded the phish to the SOC. The original headers are preserved
+ below the forward line - this is the raw material you triage in Step 1.
+
+Hi SOC team,
+
+Got this first thing this morning. It says my salary will be held if I do not
+click by 5pm, which felt off, and the link is not our normal HR portal. I did
+not click it. Sending it over in case it matters.
+
+Thanks,
+James
+
+-----Original Message-----
+From: Cloudora HR <payroll@cloudora.io>
+Reply-To: Cloudora HR Support <hr-support@cloudora-hr-portal.example>
+Sent: Monday, 25 August 2026 08:39
+To: James Holt <james.holt@cloudora.io>
+Subject: Payroll update: action required before 5pm
+
+[Original message headers as received by Exchange Online Protection]
+Received: from mail.cloudora-hr-portal.example (198.18.44.23) by
+ DB9EUR03FT034.mail.protection.outlook.com with Microsoft SMTP Server via
+ Frontend Transport; Mon, 25 Aug 2026 08:39:05 +0000
+Authentication-Results: spf=fail (sender IP is 198.18.44.23)
+ smtp.mailfrom=cloudora.io; dkim=fail header.d=cloudora.io;
+ dmarc=fail action=quarantine header.from=cloudora.io; compauth=fail reason=001
+Message-ID: <A-0019@mail.cloudora-hr-portal.example>
+
+Dear Colleague,
+
+Our payroll system has been upgraded ahead of the August pay run. To avoid a
+delay to your salary payment, you must re-confirm your details before 5:00pm
+today.
+
+Confirm your payroll details here:
+https://cloudora-hr-portal.example/payroll/login
+
+Failure to verify by the deadline may result in your August payment being held.
+
+Kind regards,
+Cloudora HR and Payroll Team

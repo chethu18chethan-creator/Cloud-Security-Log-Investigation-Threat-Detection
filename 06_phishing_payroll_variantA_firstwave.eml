@@ -1,0 +1,71 @@
+Return-Path: <payroll@cloudora.io>
+Received: from LO4P123MB3390.GBRP123.PROD.OUTLOOK.COM
+ (2603:10a6:600:55::17) by LO2P123MB4410.GBRP123.PROD.OUTLOOK.COM with
+ HTTPS; Mon, 25 Aug 2026 08:04:42 +0000
+Received: from DB9EUR03FT034.eop-EUR03.prod.protection.outlook.com
+ (2603:10a6:10:1e2::9) by DB7PR08CA0012.outlook.office365.com
+ (2603:10a6:10:2c::25) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9145.22; Mon, 25 Aug
+ 2026 08:04:41 +0000
+Received: from mail.cloudora-hr-portal.example (198.18.44.10) by
+ DB9EUR03FT034.mail.protection.outlook.com (10.152.16.62) with Microsoft SMTP
+ Server id 15.20.9145.14 via Frontend Transport; Mon, 25 Aug 2026 08:04:36 +0000
+Authentication-Results: spf=fail (sender IP is 198.18.44.10)
+ smtp.mailfrom=cloudora.io; dkim=fail (body hash did not verify)
+ header.d=cloudora.io; dmarc=fail action=quarantine header.from=cloudora.io;
+ compauth=fail reason=001
+Received-SPF: Fail (protection.outlook.com: domain of cloudora.io does not
+ designate 198.18.44.10 as permitted sender) receiver=protection.outlook.com;
+ client-ip=198.18.44.10; helo=mail.cloudora-hr-portal.example;
+From: "Cloudora HR" <payroll@cloudora.io>
+Reply-To: "Cloudora HR Support" <hr-support@cloudora-hr-portal.example>
+To: "Freya Lynn" <freya.lynn@cloudora.io>
+Subject: Payroll update: action required before 5pm
+Date: Mon, 25 Aug 2026 08:04:33 +0000
+Message-ID: <A-0015@mail.cloudora-hr-portal.example>
+X-Mailer: PHPMailer 6.8.0 (https://github.com/PHPMailer/PHPMailer)
+X-Originating-IP: [198.18.44.10]
+MIME-Version: 1.0
+Content-Type: multipart/alternative; boundary="=_cldA15_boundary_1b7d"
+X-MyFirstHack-Training: Synthetic phishing sample for CLD-0002 - the copy the
+ walkthrough victim (freya.lynn) received, sent from the FIRST-wave relay
+ 198.18.44.10. Compare its sending IP with 01_...variantA_reported.eml
+ (198.18.44.23) to see the campaign used two relays in the same /24. Reserved
+ .example TLD, non-resolvable; no live harvesting page exists.
+
+--=_cldA15_boundary_1b7d
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: quoted-printable
+
+Dear Colleague,
+
+Our payroll system has been upgraded ahead of the August pay run. To avoid a
+delay to your salary payment, you must re-confirm your details before 5:00pm
+today.
+
+Confirm your payroll details here:
+https://cloudora-hr-portal.example/payroll/login
+
+Failure to verify by the deadline may result in your August payment being held.
+
+Kind regards,
+Cloudora HR and Payroll Team
+
+--=_cldA15_boundary_1b7d
+Content-Type: text/html; charset="utf-8"
+Content-Transfer-Encoding: quoted-printable
+
+<html><body style=3D"font-family:Arial,sans-serif;color:#14181d">
+<p>Dear Colleague,</p>
+<p>Our payroll system has been upgraded ahead of the August pay run. To avoid
+a delay to your salary payment, you must re-confirm your details before
+<b>5:00pm today</b>.</p>
+<p><a href=3D"https://cloudora-hr-portal.example/payroll/login"
+style=3D"background:#0f4c81;color:#fff;padding:10px 18px;text-decoration:none;
+border-radius:4px">Confirm payroll details</a></p>
+<p style=3D"font-size:12px;color:#5b6670">Failure to verify by the deadline may
+result in your August payment being held.</p>
+<p>Kind regards,<br>Cloudora HR and Payroll Team</p>
+</body></html>
+
+--=_cldA15_boundary_1b7d--

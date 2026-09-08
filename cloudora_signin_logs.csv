@@ -1,0 +1,36 @@
+TimeGenerated,UserPrincipalName,AppDisplayName,IPAddress,City,Country,ResultType,ResultDescription,DeviceOS,Browser
+2026-08-25T08:07:04Z,arjun.mehta@cloudora.io,Microsoft Teams,203.0.113.16,London,United Kingdom,0,Success,iOS 17,Mobile Safari
+2026-08-25T08:09:49Z,maya.chen@cloudora.io,Microsoft Teams,203.0.113.11,London,United Kingdom,0,Success,Windows 11,Edge
+2026-08-25T08:12:04Z,james.holt@cloudora.io,Outlook Web App,198.51.100.20,Manchester,United Kingdom,0,Success,Windows 11,Edge
+2026-08-25T08:12:10Z,seth.lane@cloudora.io,SharePoint Online,192.0.2.32,Austin,United States,0,Success,Windows 10,Chrome
+2026-08-25T08:12:48Z,ryan.boyd@cloudora.io,Outlook Web App,203.0.113.10,London,United Kingdom,0,Success,iOS 17,Mobile Safari
+2026-08-25T08:18:46Z,emma.hayes@cloudora.io,SharePoint Online,203.0.113.12,London,United Kingdom,0,Success,Windows 10,Chrome
+2026-08-25T08:19:45Z,olivia.kaur@cloudora.io,Microsoft 365,203.0.113.12,London,United Kingdom,0,Success,Windows 11,Edge
+2026-08-25T08:20:56Z,adam.clark@cloudora.io,Microsoft 365,192.0.2.30,Austin,United States,0,Success,macOS 14,Safari
+2026-08-25T08:24:41Z,tara.kemp@cloudora.io,Outlook Web App,203.0.113.14,London,United Kingdom,0,Success,Windows 10,Chrome
+2026-08-25T08:29:33Z,freya.lynn@cloudora.io,Outlook Web App,198.51.100.20,Manchester,United Kingdom,0,Success,iOS 17,Mobile Safari
+2026-08-25T08:36:59Z,nina.cole@cloudora.io,Outlook Web App,198.51.100.22,Manchester,United Kingdom,0,Success,Windows 10,Chrome
+2026-08-25T08:37:09Z,hugo.marsh@cloudora.io,Outlook Web App,198.51.100.20,Manchester,United Kingdom,0,Success,iOS 17,Mobile Safari
+2026-08-25T08:37:32Z,chloe.price@cloudora.io,Microsoft 365,203.0.113.17,London,United Kingdom,0,Success,Android 14,Chrome Mobile
+2026-08-25T08:39:58Z,dina.said@cloudora.io,Microsoft 365,203.0.113.12,London,United Kingdom,0,Success,Windows 11,Edge
+2026-08-25T08:40:33Z,omar.farah@cloudora.io,SharePoint Online,203.0.113.10,London,United Kingdom,0,Success,iOS 17,Mobile Safari
+2026-08-25T10:34:20Z,freya.lynn@cloudora.io,Microsoft 365,198.18.7.200,Amsterdam,Netherlands,0,Success,Windows 11,Chrome
+2026-08-25T10:36:05Z,freya.lynn@cloudora.io,Outlook Web App,198.18.7.200,Amsterdam,Netherlands,0,Success,Windows 11,Chrome
+2026-08-25T10:41:48Z,freya.lynn@cloudora.io,SharePoint Online,198.18.7.200,Amsterdam,Netherlands,0,Success,Windows 11,Chrome
+2026-08-25T13:00:14Z,olivia.kaur@cloudora.io,Microsoft 365,203.0.113.12,London,United Kingdom,0,Success,Windows 11,Edge
+2026-08-25T13:01:56Z,nina.cole@cloudora.io,Outlook Web App,198.51.100.22,Manchester,United Kingdom,0,Success,Windows 10,Chrome
+2026-08-25T13:03:05Z,adam.clark@cloudora.io,SharePoint Online,192.0.2.30,Austin,United States,0,Success,macOS 14,Safari
+2026-08-25T13:10:13Z,omar.farah@cloudora.io,Microsoft Teams,203.0.113.10,London,United Kingdom,0,Success,iOS 17,Mobile Safari
+2026-08-25T13:15:01Z,james.holt@cloudora.io,Microsoft Teams,198.51.100.20,Manchester,United Kingdom,0,Success,Windows 11,Edge
+2026-08-25T13:18:00Z,seth.lane@cloudora.io,Outlook Web App,192.0.2.32,Austin,United States,0,Success,Windows 10,Chrome
+2026-08-25T13:22:05Z,ryan.boyd@cloudora.io,Microsoft 365,198.18.7.200,Amsterdam,Netherlands,0,Success,Windows 11,Chrome
+2026-08-25T13:25:28Z,tara.kemp@cloudora.io,SharePoint Online,203.0.113.14,London,United Kingdom,0,Success,Windows 10,Chrome
+2026-08-25T13:25:33Z,ryan.boyd@cloudora.io,Outlook Web App,198.18.7.200,Amsterdam,Netherlands,0,Success,Windows 11,Chrome
+2026-08-25T13:34:15Z,emma.hayes@cloudora.io,SharePoint Online,203.0.113.12,London,United Kingdom,0,Success,Windows 10,Chrome
+2026-08-25T13:38:35Z,freya.lynn@cloudora.io,Microsoft 365,198.51.100.20,Manchester,United Kingdom,0,Success,iOS 17,Mobile Safari
+2026-08-25T13:38:48Z,hugo.marsh@cloudora.io,Microsoft Teams,198.51.100.20,Manchester,United Kingdom,0,Success,iOS 17,Mobile Safari
+2026-08-25T13:43:49Z,ryan.boyd@cloudora.io,Outlook Web App,203.0.113.10,London,United Kingdom,0,Success,iOS 17,Mobile Safari
+2026-08-25T13:48:08Z,maya.chen@cloudora.io,SharePoint Online,203.0.113.11,London,United Kingdom,0,Success,Windows 11,Edge
+2026-08-25T13:48:55Z,chloe.price@cloudora.io,Outlook Web App,203.0.113.17,London,United Kingdom,0,Success,Android 14,Chrome Mobile
+2026-08-25T13:49:38Z,dina.said@cloudora.io,Outlook Web App,203.0.113.12,London,United Kingdom,0,Success,Windows 11,Edge
+2026-08-25T13:55:17Z,arjun.mehta@cloudora.io,SharePoint Online,203.0.113.16,London,United Kingdom,0,Success,iOS 17,Mobile Safari

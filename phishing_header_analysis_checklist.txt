@@ -1,0 +1,120 @@
+============================================================================
+ CLOUDORA | REUSABLE PHISHING HEADER-ANALYSIS CHECKLIST
+ Ticket CLD-0002 - keep this next to you for every reported email, forever
+ MyFirstHack | myfirstcyberjob community resource
+============================================================================
+
+This is the routine you run on every reported email before you touch KQL. Open
+the raw .eml in a text editor (never in a mail client - you do not want it
+rendering), or paste the full headers into a header analyzer. Work top to
+bottom. The goal is a verdict you can defend: phish, or legitimate, and why.
+
+Reading order matters: an attacker controls the pretty parts (the From display
+name, the body). They do not control the Received chain your own mail system
+stamped on, or the authentication results your gateway calculated. Trust the
+parts the attacker cannot forge.
+
+----------------------------------------------------------------------------
+1. THE DISPLAY NAME IS NOT EVIDENCE
+----------------------------------------------------------------------------
+[ ] Read the From display name, then ignore it. "Cloudora HR" means nothing -
+    anyone can type it. Look at the actual address in the angle brackets.
+[ ] Does the From address domain exactly match the brand it claims to be?
+    cloudora.io is Cloudora. cloudora-hr-portal.example is NOT - it is a
+    lookalike. One character of difference is a different company.
+
+----------------------------------------------------------------------------
+2. AUTHENTICATION-RESULTS (the three-letter verdicts)
+----------------------------------------------------------------------------
+[ ] Find the Authentication-Results header. Read spf=, dkim=, dmarc=.
+[ ] SPF: did the sending IP have permission to send for the envelope domain?
+    fail = the IP is not on that domain's allowed-sender list.
+[ ] DKIM: is there a valid cryptographic signature, and does it verify?
+    fail = the signature is missing or broken.
+[ ] DMARC: does the From-header domain line up with SPF/DKIM (alignment)?
+    fail action=quarantine = the message failed the brand's own policy.
+[ ] compauth= is Microsoft's composite verdict. fail reason=001 is a strong
+    spoof signal.
+
+    ** THE TRAP: pass does not mean safe. **
+    Authentication only proves the message really came from the domain in the
+    From header. If that domain is the attacker's own lookalike
+    (cloudora-hr-portal.example), SPF, DKIM and DMARC can ALL pass - for the
+    wrong company. Always ask "passed for WHICH domain?" before you trust a
+    green result. A genuine Cloudora ESP mail (e.g. Mailchimp) passes with
+    dkim d=cloudora.io. A lookalike passes with d=cloudora-hr-portal.example.
+    Same word "pass", opposite verdict.
+
+----------------------------------------------------------------------------
+3. THE RECEIVED CHAIN (where did it really come from?)
+----------------------------------------------------------------------------
+[ ] Read the Received headers from the BOTTOM up - the bottom is the origin.
+[ ] Find the first external hop: "from <host> (<IP>) by <your gateway>".
+    That IP and host are the true sender. Write the IP down - it is your
+    first IOC.
+[ ] Does the origin host match the brand? A "Cloudora HR" email arriving
+    "from mail.cloudora-hr-portal.example (198.18.44.23)" is not Cloudora.
+[ ] Compare the origin IP across multiple reported copies. Two IPs in the same
+    /24 (198.18.44.10 and 198.18.44.23) means one campaign, two relays - scope
+    accordingly.
+
+----------------------------------------------------------------------------
+4. RETURN-PATH AND REPLY-TO MISMATCHES
+----------------------------------------------------------------------------
+[ ] Return-Path (the envelope bounce address): does it match the From domain?
+[ ] Reply-To: where does a reply actually go? A From of payroll@cloudora.io
+    with a Reply-To of hr-support@cloudora-hr-portal.example means your reply
+    leaves the company straight to the attacker. Classic giveaway.
+[ ] Any address in From / Return-Path / Reply-To pointing at a domain that is
+    not the real brand is a red flag on its own.
+
+----------------------------------------------------------------------------
+5. THE LINKS (hover, do not click)
+----------------------------------------------------------------------------
+[ ] Read the href in the HTML part, not the visible text. The text may say
+    "cloudora.io"; the href may go somewhere else.
+[ ] Where does the link actually go? Legitimate Cloudora payroll links stay on
+    cloudora.io (e.g. myhr.cloudora.io). A link to cloudora-hr-portal.example
+    is credential harvesting.
+[ ] Note the full URL as an IOC. Do NOT visit it. Defang it when you write it
+    down: hxxps://cloudora-hr-portal[.]example/payroll/login
+[ ] Legitimate senders never ask you to "confirm your password / bank details"
+    via an emailed link. Real portals use single sign-on.
+
+----------------------------------------------------------------------------
+6. PRESSURE AND PRETEXT (the human layer)
+----------------------------------------------------------------------------
+[ ] Urgency and threat: "before 5pm", "your salary will be held". Manufactured
+    time pressure is designed to stop you thinking. Note it, do not obey it.
+[ ] Generic greeting ("Dear Colleague") on something that should be personal.
+[ ] A request that bypasses the normal process (confirm bank details by link
+    instead of inside the portal).
+
+----------------------------------------------------------------------------
+7. ENRICH THE INDICATORS (VirusTotal / AbuseIPDB)
+----------------------------------------------------------------------------
+[ ] Domain -> VirusTotal: check detections, creation date (brand-new domains
+    are suspicious), and the Relations tab for associated IPs/URLs.
+[ ] Sending IP -> AbuseIPDB: check the Abuse Confidence Score, report
+    categories (look for "Email Spam" / "Phishing") and the hosting ASN.
+    A throwaway VPS in a country with no Cloudora presence, freshly reported,
+    supports a phishing verdict.
+[ ] Read results as SUPPORTING evidence, not the whole verdict. A clean score
+    on a brand-new domain still fails your header analysis. Your reading of the
+    headers is the primary evidence; enrichment corroborates it.
+
+----------------------------------------------------------------------------
+8. WRITE THE VERDICT
+----------------------------------------------------------------------------
+[ ] One line: PHISH or LEGITIMATE.
+[ ] Two or three pieces of evidence that settled it (e.g. "From spoofs
+    cloudora.io, SPF/DKIM/DMARC all fail, origin 198.18.44.23, link to
+    cloudora-hr-portal.example").
+[ ] The IOCs to hand to the scoping/blocking step: domains, IPs, URLs, the
+    sender address, the subject line.
+
+Remember: clearing a benign email with evidence is as valuable as catching a
+phish with evidence. The Mailchimp newsletter passes every authentication check
+FOR cloudora.io and links to the real list-manage domain - that is a genuine
+send, not a threat. Say why it is clean, so nobody re-investigates it next week.
+============================================================================

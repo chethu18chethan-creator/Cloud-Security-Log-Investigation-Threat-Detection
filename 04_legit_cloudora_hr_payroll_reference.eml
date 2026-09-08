@@ -1,0 +1,71 @@
+Return-Path: <payroll@cloudora.io>
+Received: from LO4P123MB6621.GBRP123.PROD.OUTLOOK.COM
+ (2603:10a6:600:2aa::19) by LO2P123MB4410.GBRP123.PROD.OUTLOOK.COM
+ (2603:10a6:600:31::12) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9145.22; Thu, 20 Aug
+ 2026 09:02:15 +0000
+Authentication-Results: spf=pass (sender IP is 40.107.20.55)
+ smtp.mailfrom=cloudora.io; dkim=pass (signature was verified)
+ header.d=cloudora.io; dmarc=pass action=none header.from=cloudora.io;
+ compauth=pass reason=100
+Received-SPF: Pass (protection.outlook.com: domain of cloudora.io designates
+ 40.107.20.55 as permitted sender - include:spf.protection.outlook.com)
+ receiver=protection.outlook.com; client-ip=40.107.20.55;
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=cloudora.io;
+ s=selector1; h=From:Subject:Date:To:MIME-Version;
+ bh=Ab1Cd2Ef3Gh4Ij5Kl6Mn7Op8Qr9St0Uv1Wx2Yz3=; b=Nq7pWcV2...
+X-MS-Exchange-Organization-AuthAs: Internal
+X-MS-Exchange-Organization-AuthSource: LO4P123MB6621.GBRP123.PROD.OUTLOOK.COM
+From: "Cloudora Payroll" <payroll@cloudora.io>
+Reply-To: "Cloudora Payroll" <payroll@cloudora.io>
+To: "Cloudora Staff" <all-staff@cloudora.io>
+Subject: August pay date and payslip availability
+Date: Thu, 20 Aug 2026 09:02:12 +0000
+Message-ID: <a71c9f20-2026-08-20-payroll@cloudora.io>
+MIME-Version: 1.0
+Content-Type: multipart/alternative; boundary="=_hr_ref_boundary_2b1c"
+X-MyFirstHack-Training: Genuine internal HR mail (the clean reference for
+ CLD-0002). Sent from cloudora.io through the company tenant: SPF pass, DKIM
+ aligned to cloudora.io, DMARC pass, Reply-To matches From, internal auth
+ source. Links point to the real cloudora.io single-sign-on portal and it
+ never asks for a password by email. All values synthetic.
+
+--=_hr_ref_boundary_2b1c
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: quoted-printable
+
+Hello everyone,
+
+August payslips will be available in the HR portal from Wednesday 27 August.
+Pay date is Friday 29 August as usual.
+
+You can view your payslip by signing in to the HR portal with your normal
+Cloudora single sign-on:
+https://myhr.cloudora.io
+
+We will never ask you to confirm your bank details or password by email. If you
+need to change your bank details, do it inside the portal after signing in, or
+contact the payroll team directly.
+
+Thanks,
+Tara Kemp
+People and Payroll, Cloudora
+
+--=_hr_ref_boundary_2b1c
+Content-Type: text/html; charset="utf-8"
+Content-Transfer-Encoding: quoted-printable
+
+<html><body style=3D"font-family:Arial,sans-serif;color:#14181d">
+<p>Hello everyone,</p>
+<p>August payslips will be available in the HR portal from <b>Wednesday 27
+August</b>. Pay date is <b>Friday 29 August</b> as usual.</p>
+<p>You can view your payslip by signing in to the HR portal with your normal
+Cloudora single sign-on: <a href=3D"https://myhr.cloudora.io">myhr.cloudora.io</=
+a></p>
+<p>We will never ask you to confirm your bank details or password by email. If
+you need to change your bank details, do it inside the portal after signing in,
+or contact the payroll team directly.</p>
+<p>Thanks,<br>Tara Kemp<br>People and Payroll, Cloudora</p>
+</body></html>
+
+--=_hr_ref_boundary_2b1c--
